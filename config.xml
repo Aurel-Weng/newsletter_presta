@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>wgl_newsletter</name>
+	<displayName><![CDATA[Wengel - Newsletter]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Module de newsletter, lié au WordPress & tracking]]></description>
+	<author><![CDATA[Aurélien]]></author>
+	<tab><![CDATA[customers]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>0</need_instance>
+</module>
