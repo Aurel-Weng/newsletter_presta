@@ -12,6 +12,9 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
     public $error = [];
     public $api;
 
+    /**
+     * Initialise le controller
+     */
     public function init() {
         parent::init();
 
@@ -22,6 +25,7 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
         } else {
             $this->id_client = (int)$this->context->customer->id;
 
+            // Regarde si l'utilisateur est connecté à ses souscriptions
             $response_subs = $this->api->affichage(['id' => $this->id_client, 'site' => null]);
             if (empty($response_subs['erreur'])) {
                 $this->exist = true;
@@ -29,6 +33,9 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
         }
     }
 
+    /**
+     * Initialise le rendu
+     */
     public function initContent() {
         parent::initContent();
 
@@ -61,9 +68,13 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
         $this->setTemplate('module:wgl_newsletter/views/templates/front/newsletter.tpl');
     }
 
+    /**
+     * Requête sur les formulaires
+     */
     public function postProcess() {
         $result = null;
 
+        // Partie modification des souscriptions
         if (Tools::isSubmit('modification_subs')) {
             $data = [
                 'name'      => Tools::getValue('nom'),
@@ -84,6 +95,7 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
             Tools::redirect($this->context->link->getModuleLink($this->module->name, 'newsletter', $result));
         }
         
+        // Partie de désinscription
         if (Tools::isSubmit('suppression_subs')) {
             $data = [
                 'email'     => Tools::getValue('email'),
@@ -91,12 +103,16 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
             ];
 
             $result = $this->api->desinscription($data);
-            die(var_dump($result));
 
             Tools::redirect($this->context->link->getModuleLink($this->module->name, 'newsletter', $result));
         }         
     }
 
+    /**
+     * Récupération des infos
+     * 
+     * @return array Les infos (souscriptions et secteurs)
+     */
     public function getInfo() {
         $data = [];
 
@@ -134,16 +150,16 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
             }
         }
 
-        // die(var_dump($data));
-
         return $data;
     }
 
+    /**
+     * Ajoute les médias (js et css)
+     */
     public function setMedia()
     {
         parent::setMedia();
 
-        // CSS
         $this->registerStylesheet(
             'module-wgl-newsletter-style',
             'modules/'.$this->module->name.'/views/css/liste.css',
@@ -153,7 +169,6 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
             ]
         );
 
-        // JS
         $this->registerJavascript(
             'module-wgl-newsletter-script',
             'modules/'.$this->module->name.'/views/js/liste.js',
@@ -164,6 +179,9 @@ class Wgl_NewsletterNewsletterModuleFrontController extends ModuleFrontControlle
         );
     }
 
+    /**
+     * Met à jour la fils d'ariane
+     */
     public function getBreadcrumbLinks()
     {
         $breadcrumb = parent::getBreadcrumbLinks();

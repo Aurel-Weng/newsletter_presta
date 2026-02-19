@@ -22,7 +22,7 @@ class Wgl_Newsletter extends Module
         parent::__construct();
 
         $this->displayName = 'Wengel - Newsletter';
-        $this->description = 'Module de newsletter lié à WordPress & tracking';
+        $this->description = 'Module de newsletter lié au WordPress & tracking';
     }
 
     public function install() {
@@ -30,7 +30,9 @@ class Wgl_Newsletter extends Module
             && Configuration::updateValue('wgl_newsletter_url', '')
             && Configuration::updateValue('wgl_newsletter_token', '')
             && Configuration::updateValue('wgl_newsletter_color', '#fff')
-            && $this->registerHook('displayCustomerAccount');
+            && $this->registerHook('displayCustomerAccount')
+            && $this->registerHook('displayFooterBefore')
+            && $this->registerHook('actionFrontControllerSetMedia');
     }
 
     public function uninstall() {
@@ -142,5 +144,46 @@ class Wgl_Newsletter extends Module
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/account-subs-link.tpl');
+    }
+
+    public function hookDisplayFooterBefore() {
+        require_once dirname(__FILE__) . '/classes/ApiNewsletter.php';
+
+        $api = new ApiNewsletter();
+        $id_client = null;
+
+        if ($this->context->customer->isLogged()) {
+            $id_client = (int)$this->context->customer->id;
+
+            $co = $api->connecte(['id_client'=>$id_client, 'site'=>null]);
+
+            if (isset($co['etat']) && $co['etat'] != 'success') {
+                $response_sect = $api->secteurs([]);
+                $data = array_map(function ($secteur) {
+                    return [
+                        'id'    => (string) $secteur['id'],
+                        'name'  => (string) $secteur['name'],
+                        'state' => (string) $secteur['state'],
+                    ];
+                }, $response_sect);
+
+                $couleur = Configuration::get('wgl_newsletter_color');
+                $shadows = "box-shadow: 0 0 20px 0px ".$couleur."c4 !important; -webkit-box-shadow: 0 0 20px 0px ".$couleur."c4; !important -moz-box-shadow: 0 0 20px 0px ".$couleur."c4 !important;";
+
+                $this->context->smarty->assign([
+                    'url' => $this->context->link->getModuleLink($this->name, 'homenewsletter', [], true),
+                    'shadow' => $shadows,
+                    'color'  => $couleur,
+                    'secteurs' => $data
+                ]);
+
+                return $this->fetch('module:' . $this->name . '/views/templates/front/home-newsletter.tpl');
+            }
+        }
+    }
+
+    public function hookActionFrontControllerSetMedia() {
+        $this->context->controller->registerStylesheet('module-wgl_newsletter_front-css', 'modules/' . $this->name . '/views/css/front.css');
+        $this->context->controller->registerJavascript('module-wgl_newsletter_front-js', 'modules/' . $this->name . '/views/js/front.js');
     }
 }

@@ -1,0 +1,185 @@
+.wgl_ns_container_newsletter {
+    clear: both;
+    display: flex;
+    flex-direction: column;
+}
+
+.wgl_ns_title {
+    margin: auto;
+    padding-top: 30px;
+    max-width: 1000px;
+    font-size: x-large;
+    color: #fff !important;
+}
+
+.wgl_ns_container_newsletter .alert {
+    max-width: 900px;
+    margin: auto;
+    border-radius: 10px;
+}
+
+.wgl_ns_forms {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.wgl_ns_container_newsletter #result_req{
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    border-radius: 0.375rem;
+    background-color: rgb(35 132 52 / 50%);
+}
+
+.wgl_ns_connexion_container,
+.wgl_ns_inscription_container {
+    background: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    flex: 1;
+    min-width: 300px;
+    box-shadow: 0 0 6px 0px rgba(0,0,0,0.3);
+}
+
+.wgl_ns_container_newsletter h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.wgl_ns_informations {
+    display: flex;
+}
+
+.wgl_ns_container_newsletter form .wgl_ns_email,
+.wgl_ns_container_newsletter form .wgl_ns_nom {
+    margin-bottom: 15px;
+}
+
+.wgl_ns_container_newsletter label {
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #555;
+}
+
+.wgl_ns_container_newsletter input[type="text"],
+.wgl_ns_container_newsletter input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 14px;
+}
+
+.wgl_ns_informations input[type="email"],
+.wgl_ns_informations input[type="email"] {
+    width: auto;
+}
+
+.wgl_ns_container_newsletter input:focus {
+    border-color: #262626;
+}
+
+.wgl_ns_container_newsletter button {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.wgl_ns_select-container {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.wgl_ns_select-button {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+}
+
+.wgl_ns_select-button:hover {
+    border-color: #393939;
+}
+
+.wgl_ns_select-button span {
+    color: #555;
+}
+
+.wgl_ns_arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #555;
+}
+
+.wgl_ns_select-options {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    display: none;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.wgl_ns_select-options.active {
+    display: block;
+}
+
+.wgl_ns_option-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.wgl_ns_option-item:last-child {
+    margin-bottom: 0;
+}
+
+.wgl_ns_conf {
+    margin-top: 15px;
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: baseline;
+}
+
+.wgl_ns_conf input {
+    margin-right: 6px;
+}
+
+.wgl_ns_conf label {
+    text-align: left;
+}
+
+@media screen and (max-width: 500px) {
+    .wgl_ns_informations {
+        display: block;
+    }
+
+    .wgl_ns_informations input[type="email"],
+    .wgl_ns_informations input[type="email"] {
+        width: 100%;
+    }
+}
