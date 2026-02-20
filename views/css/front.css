@@ -50,6 +50,11 @@
     color: #333;
 }
 
+.wgl_ns_tips {
+    font-size: small;
+    font-style: italic;
+}
+
 .wgl_ns_informations {
     display: flex;
 }
@@ -171,6 +176,7 @@
 
 .wgl_ns_conf label {
     text-align: left;
+    font-size: small;
 }
 
 @media screen and (max-width: 500px) {

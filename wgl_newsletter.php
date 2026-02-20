@@ -140,7 +140,8 @@ class Wgl_Newsletter extends Module
 
     public function hookDisplayCustomerAccount() {
         $this->context->smarty->assign([
-            'subsUrl' => $this->context->link->getModuleLink($this->name, 'newsletter')
+            'subsUrl' => $this->context->link->getModuleLink($this->name, 'newsletter'),
+            'image'   => 'https://preprod.wengel.biz/modules/'.$this->name.'/views/img/lettre.svg'
         ]);
 
         return $this->display(__FILE__, 'views/templates/hook/account-subs-link.tpl');
@@ -152,12 +153,16 @@ class Wgl_Newsletter extends Module
         $api = new ApiNewsletter();
         $id_client = null;
 
+        $controller = $this->context->controller;
+
+        $account_ns = ($controller instanceof ModuleFrontController && $controller->module->name == 'wgl_newsletter');
+
         if ($this->context->customer->isLogged()) {
             $id_client = (int)$this->context->customer->id;
 
             $co = $api->connecte(['id_client'=>$id_client, 'site'=>null]);
 
-            if (isset($co['etat']) && $co['etat'] != 'success') {
+            if ( (isset($co['etat']) && $co['etat'] != 'success') && !$account_ns) {
                 $response_sect = $api->secteurs([]);
                 $data = array_map(function ($secteur) {
                     return [
@@ -169,12 +174,15 @@ class Wgl_Newsletter extends Module
 
                 $couleur = Configuration::get('wgl_newsletter_color');
                 $shadows = "box-shadow: 0 0 20px 0px ".$couleur."c4 !important; -webkit-box-shadow: 0 0 20px 0px ".$couleur."c4; !important -moz-box-shadow: 0 0 20px 0px ".$couleur."c4 !important;";
+                $nom     = $this->context->customer->firstname . ' ' . $this->context->customer->lastname;
 
                 $this->context->smarty->assign([
                     'url' => $this->context->link->getModuleLink($this->name, 'homenewsletter', [], true),
                     'shadow' => $shadows,
                     'color'  => $couleur,
-                    'secteurs' => $data
+                    'secteurs' => $data,
+                    'email'  => $this->context->customer->email,
+                    'nom'    => $nom,
                 ]);
 
                 return $this->fetch('module:' . $this->name . '/views/templates/front/home-newsletter.tpl');

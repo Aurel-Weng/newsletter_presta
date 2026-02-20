@@ -3,10 +3,11 @@
     <div class="wgl_ns_forms">
         <div class="wgl_ns_connexion_container" style="">
             <h2>Déjà abonné ?</h2>
+            <p class="wgl_ns_tips">Renseigné votre adresse mail afin de pouvoir gérer vos souscriptions dans votre compte.</p>
             <form action="{$url}" id="connexion_form" method="post">
                 <div class="wgl_ns_email">
                     <label for="email">Votre email :</label>
-                    <input type="email" name="email" id="" placeholder="Votre nom" required>
+                    <input type="email" name="email" id="" placeholder="Votre nom" value="{$email}" required>
                 </div>
             <button type="submit" name="wgl_ns_connexion" class="wgl_ns_btn btn-success" style="background-color: {$color} !important; border-color: {$color}">Connexion</button>
             </form>
@@ -18,12 +19,12 @@
                 <div class="wgl_ns_informations">
                     <div class="wgl_ns_email">
                         <label for="email">Votre email :</label>
-                        <input type="email" name="email" id="" placeholder="votre@email.com" required>
+                        <input type="email" name="email" id="" placeholder="votre@email.com" value="{$email}" required>
                     </div>
 
                     <div class="wgl_ns_nom">
                         <label for="nom">Votre nom :</label>
-                        <input type="text" name="nom" id="" placeholder="Votre nom" required>
+                        <input type="text" name="nom" id="" placeholder="Votre nom" value="{$nom}" required>
                     </div>
 
                 </div>
